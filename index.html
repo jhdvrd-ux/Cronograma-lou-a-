@@ -53,7 +53,7 @@
 
 <button id="reset">🔄 Resetar Cronograma</button>
 <div class="pontuacao" id="pontuacao"></div>
-<footer>Feito com 💙 por Otávio e Laura</footer>
+<footer>Feito com amor pela mamãe</footer>
 
 <script>
   const cronograma = [
@@ -68,7 +68,7 @@
   const pontuacaoDiv = document.getElementById("pontuacao");
   const placarOtavio = document.getElementById("placar-otavio");
   const placarLaura = document.getElementById("placar-laura");
-  const SENHA = "juhdograu"; // Senha para alterar botões e reset
+  const SENHA = "juhfer"; // Senha para alterar botões e reset
 
   function criarTabela() {
     tabela.innerHTML = `<tr>
@@ -159,7 +159,7 @@
   document.getElementById("reset").addEventListener("click",()=>{
     const senha=prompt("Digite a senha para resetar:");
     if(senha!==SENHA){ alert("Senha incorreta!"); return; }
-    if(confirm("Deseja realmente resetar o cronograma?")){
+    if(confirm("deseja realmente resetar o cronograma?")){
       localStorage.clear();
       criarTabela();
       adicionarEventos();
