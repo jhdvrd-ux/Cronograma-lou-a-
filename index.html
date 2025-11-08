@@ -5,94 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cronograma de Lavar a Louça - Otávio e Laura</title>
   <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      background-color: #f7f9fb;
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 30px;
-    }
-
-    h1 {
-      color: #2c3e50;
-      margin-bottom: 5px;
-    }
-
-    h2 {
-      color: #555;
-      margin-bottom: 30px;
-    }
-
-    table {
-      border-collapse: collapse;
-      width: 95%;
-      max-width: 800px;
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    th, td {
-      padding: 12px;
-      text-align: center;
-      border-bottom: 1px solid #eee;
-    }
-
-    th {
-      background-color: #3498db;
-      color: white;
-      text-transform: uppercase;
-      font-size: 14px;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f3f6fa;
-    }
-
-    .otavio {
-      color: #1abc9c;
-      font-weight: bold;
-    }
-
-    .laura {
-      color: #e67e22;
-      font-weight: bold;
-    }
-
-    button {
-      padding: 6px 10px;
-      border: none;
-      border-radius: 5px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .done {
-      background-color: #2ecc71;
-      color: white;
-    }
-
-    .not-done {
-      background-color: #e74c3c;
-      color: white;
-    }
-
-    footer {
-      margin-top: 40px;
-      font-size: 14px;
-      color: #888;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    body { font-family: "Poppins", sans-serif; background: linear-gradient(120deg, #f7f9fb, #dfe9f3); color: #333; display:flex; flex-direction: column; align-items:center; padding:20px; min-height:100vh; }
+    h1,h2 { text-align:center; }
+    h1{color:#2c3e50;margin-bottom:5px;}
+    h2{color:#555;margin-bottom:20px;}
+    .placar{width:100%;max-width:900px;display:flex;justify-content:space-around;background:#3498db;color:white;padding:10px 20px;border-radius:10px;margin-bottom:20px;font-weight:600;font-size:16px;box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+    .table-container{width:100%;max-width:900px;overflow-x:auto;}
+    table{border-collapse:collapse;width:100%;background:white;border-radius:12px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,0.1);transition:all 0.3s;}
+    th,td{padding:12px;text-align:center;border-bottom:1px solid #eee;transition:background 0.3s, transform 0.2s;}
+    th{background-color:#3498db;color:white;text-transform:uppercase;font-size:14px;}
+    tr:nth-child(even){background-color:#f3f6fa;}
+    td div{font-weight:600;transition:transform 0.2s;}
+    td:hover div{transform:scale(1.1);}
+    .otavio{color:#1abc9c;font-weight:bold;}
+    .laura{color:#e67e22;font-weight:bold;}
+    button{padding:6px 10px;border:none;border-radius:5px;font-weight:500;cursor:pointer;transition:all 0.3s;}
+    .done{background-color:#2ecc71;color:white;transform:scale(1.1);}
+    .not-done{background-color:#e74c3c;color:white;}
+    #reset{margin:20px 0;background-color:#f39c12;color:white;}
+    .pontuacao{margin-top:20px;font-size:18px;font-weight:600;color:#2c3e50;text-align:center;}
+    footer{margin-top:30px;font-size:14px;color:#888;text-align:center;}
   </style>
 </head>
 <body>
 
-  <h1>🧽 Cronograma de Lavar a Louça</h1>
-  <h2>Otávio e Laura - 30 dias úteis</h2>
+<h1>🧽 Cronograma de Lavar a Louça</h1>
+<h2>Otávio e Laura - 30 dias úteis</h2>
 
+<div class="placar">
+  <div>Otávio: <span id="placar-otavio">0</span> pts</div>
+  <div>Laura: <span id="placar-laura">0</span> pts</div>
+</div>
+
+<div class="table-container">
   <table id="cronograma">
     <tr>
       <th>Semana</th>
@@ -103,39 +49,55 @@
       <th>Sexta</th>
     </tr>
   </table>
+</div>
 
-  <footer>
-    Feito com 💙 por Otávio e Laura
-  </footer>
+<button id="reset">🔄 Resetar Cronograma</button>
+<div class="pontuacao" id="pontuacao"></div>
+<footer>Feito com 💙 por Otávio e Laura</footer>
 
-  <script>
-    const cronograma = [
-      ["Otávio", "Laura", "Otávio", "Laura", "Otávio"],
-      ["Laura", "Otávio", "Laura", "Otávio", "Laura"],
-      ["Otávio", "Laura", "Otávio", "Laura", "Otávio"],
-      ["Laura", "Otávio", "Laura", "Otávio", "Laura"],
-      ["Otávio", "Laura", "", "", ""],
-    ];
+<script>
+  const cronograma = [
+    ["Otávio","Laura","Otávio","Laura","Otávio"],
+    ["Laura","Otávio","Laura","Otávio","Laura"],
+    ["Otávio","Laura","Otávio","Laura","Otávio"],
+    ["Laura","Otávio","Laura","Otávio","Laura"],
+    ["Otávio","Laura","","",""]
+  ];
 
-    const tabela = document.getElementById("cronograma");
+  const tabela = document.getElementById("cronograma");
+  const pontuacaoDiv = document.getElementById("pontuacao");
+  const placarOtavio = document.getElementById("placar-otavio");
+  const placarLaura = document.getElementById("placar-laura");
+  const SENHA = "juhdograu"; // Senha para alterar botões e reset
 
-    // Criar as linhas
-    cronograma.forEach((semana, i) => {
-      const linha = document.createElement("tr");
-      const celulaSemana = document.createElement("td");
-      celulaSemana.textContent = i + 1 <= 4 ? `Semana ${i + 1}` : "+2 dias";
+  function criarTabela() {
+    tabela.innerHTML = `<tr>
+      <th>Semana</th>
+      <th>Segunda</th>
+      <th>Terça</th>
+      <th>Quarta</th>
+      <th>Quinta</th>
+      <th>Sexta</th>
+    </tr>`;
+
+    cronograma.forEach((semana,i)=>{
+      const linha=document.createElement("tr");
+      const celulaSemana=document.createElement("td");
+      celulaSemana.textContent = i+1<=4 ? `Semana ${i+1}` : "+2 dias";
       linha.appendChild(celulaSemana);
 
-      semana.forEach((pessoa, j) => {
-        const celula = document.createElement("td");
-        if (pessoa) {
+      semana.forEach((pessoa,j)=>{
+        const celula=document.createElement("td");
+        if(pessoa){
           celula.classList.add(pessoa.toLowerCase());
-          celula.innerHTML = `
-            <div>${pessoa}</div>
-            <button class="not-done" data-key="${i}-${j}">Não Lavou</button>
-          `;
-        } else {
-          celula.textContent = "—";
+          const key=`${i}-${j}`;
+          const estado=localStorage.getItem(key);
+          celula.innerHTML=`<div>${pessoa}</div>
+            <button class="${estado==='lavou'?'done':'not-done'}" data-key="${key}">
+              ${estado==='lavou'?'Lavou ✅':'Não Lavou'}
+            </button>`;
+        }else{
+          celula.textContent="—";
         }
         linha.appendChild(celula);
       });
@@ -143,32 +105,67 @@
       tabela.appendChild(linha);
     });
 
-    // Função para atualizar estado no localStorage
-    function toggleStatus(btn) {
-      const key = btn.dataset.key;
-      let estado = localStorage.getItem(key);
+    const hoje=new Date().getDay();
+    if(hoje>=1 && hoje<=5){ tabela.rows[1].cells[hoje].style.backgroundColor="#f9f871"; }
 
-      if (estado === "lavou") {
-        btn.textContent = "Não Lavou";
-        btn.className = "not-done";
-        localStorage.removeItem(key);
-      } else {
-        btn.textContent = "Lavou ✅";
-        btn.className = "done";
-        localStorage.setItem(key, "lavou");
-      }
+    atualizarPontuacao();
+  }
+
+  function toggleStatus(btn){
+    const senha=prompt("Digite a senha para alterar o cronograma:");
+    if(senha!==SENHA){ alert("Senha incorreta!"); return; }
+
+    const key=btn.dataset.key;
+    if(localStorage.getItem(key)==="lavou"){
+      btn.textContent="Não Lavou";
+      btn.className="not-done";
+      localStorage.removeItem(key);
+    }else{
+      btn.textContent="Lavou ✅";
+      btn.className="done";
+      localStorage.setItem(key,"lavou");
     }
+    atualizarPontuacao();
+  }
 
-    // Restaurar estado salvo
-    document.querySelectorAll("button").forEach(btn => {
-      const key = btn.dataset.key;
-      if (localStorage.getItem(key) === "lavou") {
-        btn.textContent = "Lavou ✅";
-        btn.className = "done";
+  function atualizarPontuacao(){
+    let pontosOtavio=0;
+    let pontosLaura=0;
+
+    document.querySelectorAll("button[data-key]").forEach(btn=>{
+      const pessoa=btn.parentElement.classList.contains("otavio")?"Otávio":"Laura";
+      if(btn.classList.contains("done")){
+        if(pessoa==="Otávio") pontosOtavio+=10; else pontosLaura+=10;
       }
-      btn.addEventListener("click", () => toggleStatus(btn));
     });
-  </script>
+
+    placarOtavio.textContent=pontosOtavio;
+    placarLaura.textContent=pontosLaura;
+
+    const premioOtavio = pontosOtavio===50 ? "🏆 Ganhou R$50!" : "";
+    const premioLaura = pontosLaura===50 ? "🏆 Ganhou R$50!" : "";
+    pontuacaoDiv.innerHTML=`Otávio: ${pontosOtavio} pts ${premioOtavio}<br>Laura: ${pontosLaura} pts ${premioLaura}`;
+  }
+
+  function adicionarEventos(){
+    document.querySelectorAll("button[data-key]").forEach(btn=>{
+      btn.addEventListener("click",()=>toggleStatus(btn));
+    });
+  }
+
+  criarTabela();
+  adicionarEventos();
+
+  document.getElementById("reset").addEventListener("click",()=>{
+    const senha=prompt("Digite a senha para resetar:");
+    if(senha!==SENHA){ alert("Senha incorreta!"); return; }
+    if(confirm("Deseja realmente resetar o cronograma?")){
+      localStorage.clear();
+      criarTabela();
+      adicionarEventos();
+    }
+  });
+</script>
 
 </body>
 </html>
